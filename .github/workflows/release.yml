@@ -1,4 +1,4 @@
-name: Release Binary Packages
+name: Release & Publish Packages
 
 on:
   push:
@@ -8,21 +8,24 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   build-and-release:
-    name: Build & Release mojospace.mojoc
+    name: Build, Release & Publish
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Pixi
+      - name: Setup Pixi with prefix.dev OIDC Workload Identity
         uses: prefix-dev/setup-pixi@v0.11.3
         with:
           pixi-version: latest
           cache: true
+          auth-host: prefix.dev
+          auth-workload-identity: true
 
       - name: Install Environment
         run: pixi install
@@ -40,3 +43,6 @@ jobs:
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Conda Package to prefix.dev
+        run: pixi publish --to https://prefix.dev/anclp/mojospace --generate-attestation

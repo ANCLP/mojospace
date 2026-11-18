@@ -60,10 +60,7 @@ def lennard_jones_force_3d(
     epsilon: Float64 = 1.0,
     sigma: Float64 = 1.0
 ) -> Vec3:
-    """
-    Computes Lennard-Jones (12-6) interatomic force:
-    F(r) = 24 * eps / r^2 * (2 * (sig/r)^12 - (sig/r)^6) * r_vec
-    """
+    """Computes Lennard-Jones (12-6) interatomic force."""
     var r2 = r_vec.length_squared()
     if r2 == 0.0:
         return Vec3(0.0, 0.0, 0.0)
@@ -80,10 +77,7 @@ def lennard_jones_force_3d(
 # ---------------------------------------------------------
 
 def sph_cubic_spline_kernel_2d(r: Float64, h: Float64) -> Float64:
-    """
-    Monaghan (1992) Cubic Spline Kernel in 2D.
-    sigma_2 = 10 / (7 * pi * h^2)
-    """
+    """Evaluates the Monaghan (1992) Cubic Spline Kernel in 2D."""
     var pi: Float64 = 3.141592653589793
     var sigma: Float64 = 10.0 / (7.0 * pi * h * h)
     var q: Float64 = r / h
@@ -97,10 +91,7 @@ def sph_cubic_spline_kernel_2d(r: Float64, h: Float64) -> Float64:
         return sigma * 0.25 * term * term * term
 
 def sph_cubic_spline_kernel_3d(r: Float64, h: Float64) -> Float64:
-    """
-    Monaghan (1992) Cubic Spline Kernel in 3D.
-    sigma_3 = 1 / (pi * h^3)
-    """
+    """Evaluates the Monaghan (1992) Cubic Spline Kernel in 3D."""
     var pi: Float64 = 3.141592653589793
     var sigma: Float64 = 1.0 / (pi * h * h * h)
     var q: Float64 = r / h
@@ -114,10 +105,7 @@ def sph_cubic_spline_kernel_3d(r: Float64, h: Float64) -> Float64:
         return sigma * 0.25 * term * term * term
 
 def sph_spiky_gradient_3d(r_vec: Vec3, h: Float64) -> Vec3:
-    """
-    Müller et al. (2003) Spiky Gradient Kernel for SPH fluid pressure forces.
-    grad W = -45 / (pi * h^6) * (h - r)^2 * (r_vec / r)
-    """
+    """Evaluates the Müller et al. (2003) Spiky Gradient Kernel for pressure forces."""
     var r = r_vec.length()
     if r <= 0.0 or r >= h:
         return Vec3(0.0, 0.0, 0.0)

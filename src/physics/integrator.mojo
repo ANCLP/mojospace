@@ -5,7 +5,7 @@ from src.particle.particle2d import Particle2D
 from src.particle.particle3d import Particle3D
 
 def integrate_symplectic_euler_step_2d(
-    inout particles: List[Particle2D],
+    mut particles: List[Particle2D],
     dt: Float64,
     forces: List[Vec2]
 ):
@@ -22,7 +22,7 @@ def integrate_symplectic_euler_step_2d(
         particles[i].acc = a
 
 def integrate_symplectic_euler_step_3d(
-    inout particles: List[Particle3D],
+    mut particles: List[Particle3D],
     dt: Float64,
     forces: List[Vec3]
 ):
@@ -35,7 +35,7 @@ def integrate_symplectic_euler_step_3d(
         particles[i].acc = a
 
 def integrate_velocity_verlet_step_3d(
-    inout particles: List[Particle3D],
+    mut particles: List[Particle3D],
     dt: Float64,
     forces: List[Vec3]
 ):
@@ -55,7 +55,7 @@ def integrate_velocity_verlet_step_3d(
         particles[i].acc = new_a
 
 def integrate_velocity_verlet_step_2d(
-    inout particles: List[Particle2D],
+    mut particles: List[Particle2D],
     dt: Float64,
     forces: List[Vec2]
 ):

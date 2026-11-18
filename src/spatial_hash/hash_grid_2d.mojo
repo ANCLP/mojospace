@@ -77,11 +77,16 @@ struct SpatialHashGrid2D:
         for dx in range(-span, span + 1):
             for dy in range(-span, span + 1):
                 var h = self.hash_coord(cx + dx, cy + dy)
-                var bucket = self.buckets[h]
-                for k in range(len(bucket)):
-                    var p_idx = bucket[k]
+                for k in range(len(self.buckets[h])):
+                    var p_idx = self.buckets[h][k]
                     var dist2 = center.distance_squared_to(particles[p_idx].pos)
                     if dist2 <= r2:
-                        result.append(p_idx)
+                        var already_found = False
+                        for res_i in range(len(result)):
+                            if result[res_i] == p_idx:
+                                already_found = True
+                                break
+                        if not already_found:
+                            result.append(p_idx)
 
         return result^

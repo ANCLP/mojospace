@@ -1,7 +1,7 @@
 from src.math.vec3 import Vec3
 
 @fieldwise_init
-struct Particle3D:
+struct Particle3D(ImplicitlyCopyable):
     """3D Particle data container."""
     var id: Int
     var pos: Vec3

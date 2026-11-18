@@ -1,4 +1,4 @@
-from collections import List
+from std.collections import List
 from src.math.vec3 import Vec3
 from src.particle.particle3d import Particle3D
 from src.spatial_hash.hash_grid_3d import SpatialHashGrid3D
@@ -27,7 +27,7 @@ def main():
                     Float64(j) * spacing,
                     Float64(k) * spacing
                 )
-                particles.append(Particle3D(id=p_id, pos=pos, mass=0.02, radius=0.1))
+                particles.append(Particle3D(p_id, pos, 0.02))
                 p_id += 1
 
     print("Created", len(particles), "SPH fluid particles.")

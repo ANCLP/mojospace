@@ -1,4 +1,4 @@
-from collections import List
+from std.collections import List
 from src.math.vec3 import Vec3
 from src.particle.particle3d import Particle3D
 from src.physics.force import (
@@ -55,7 +55,7 @@ def main():
 
     # 4. Velocity Verlet Integrator test
     var particles = List[Particle3D]()
-    particles.append(Particle3D(id=0, pos=Vec3(0.0, 0.0, 0.0), vel=Vec3(10.0, 0.0, 0.0), mass=2.0))
+    particles.append(Particle3D(0, Vec3(0.0, 0.0, 0.0), Vec3(10.0, 0.0, 0.0), Vec3(), 2.0, 0.1, 0.0))
     var forces = List[Vec3]()
     # Constant force of 4.0 in X => acceleration a = F/m = 2.0
     forces.append(Vec3(4.0, 0.0, 0.0))
@@ -63,8 +63,6 @@ def main():
     var dt: Float64 = 0.1
     integrate_velocity_verlet_step_3d(particles, dt, forces)
 
-    # Expected: x = 0 + 10*0.1 + 0 = 1.0 (with a_0 = 0 initially)
-    # v = 10 + 0.5 * (0 + 2.0) * 0.1 = 10.1
     assert_true(particles[0].pos.x > 0.99 and particles[0].pos.x < 1.01, "Velocity Verlet step updates position correctly")
     assert_true(particles[0].vel.x > 10.09 and particles[0].vel.x < 10.11, "Velocity Verlet step updates velocity with new acceleration")
 

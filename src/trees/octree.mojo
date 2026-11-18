@@ -5,7 +5,7 @@ from src.math.bounds import AABB3D
 from src.particle.particle3d import Particle3D
 
 @fieldwise_init
-struct OctNode:
+struct OctNode(ImplicitlyCopyable):
     var bounds: AABB3D
     var center_of_mass: Vec3
     var total_mass: Float64

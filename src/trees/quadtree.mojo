@@ -5,7 +5,7 @@ from src.math.bounds import AABB2D
 from src.particle.particle2d import Particle2D
 
 @fieldwise_init
-struct QuadNode:
+struct QuadNode(ImplicitlyCopyable):
     var bounds: AABB2D
     var center_of_mass: Vec2
     var total_mass: Float64

@@ -1,4 +1,4 @@
-from collections import List
+from std.collections import List
 from src.math.vec3 import Vec3
 from src.math.bounds import AABB3D
 from src.particle.particle3d import Particle3D
@@ -13,38 +13,46 @@ def main():
     
     # Central star (ID 0)
     particles.append(Particle3D(
-        id=0,
-        pos=Vec3(0.0, 0.0, 0.0),
-        vel=Vec3(0.0, 0.0, 0.0),
-        mass=1000.0,
-        radius=1.0
+        0,
+        Vec3(0.0, 0.0, 0.0),
+        Vec3(0.0, 0.0, 0.0),
+        Vec3(),
+        1000.0,
+        1.0,
+        0.0
     ))
 
     # Orbiting bodies in stable circular orbits
     particles.append(Particle3D(
-        id=1,
-        pos=Vec3(10.0, 0.0, 0.0),
-        vel=Vec3(0.0, 10.0, 0.0),
-        mass=1.0,
-        radius=0.1
+        1,
+        Vec3(10.0, 0.0, 0.0),
+        Vec3(0.0, 10.0, 0.0),
+        Vec3(),
+        1.0,
+        0.1,
+        0.0
     ))
     particles.append(Particle3D(
-        id=2,
-        pos=Vec3(0.0, 20.0, 0.0),
-        vel=Vec3(-7.07, 0.0, 0.0),
-        mass=1.0,
-        radius=0.1
+        2,
+        Vec3(0.0, 20.0, 0.0),
+        Vec3(-7.07, 0.0, 0.0),
+        Vec3(),
+        1.0,
+        0.1,
+        0.0
     ))
     particles.append(Particle3D(
-        id=3,
-        pos=Vec3(-30.0, 0.0, 0.0),
-        vel=Vec3(0.0, -5.77, 0.0),
-        mass=1.0,
-        radius=0.1
+        3,
+        Vec3(-30.0, 0.0, 0.0),
+        Vec3(0.0, -5.77, 0.0),
+        Vec3(),
+        1.0,
+        0.1,
+        0.0
     ))
 
     var sim_bounds = AABB3D(Vec3(-100.0, -100.0, -100.0), Vec3(100.0, 100.0, 100.0))
-    var octree = BarnesHutOctree(bounds=sim_bounds, max_depth=12)
+    var octree = BarnesHutOctree(sim_bounds, max_depth=12)
 
     var dt: Float64 = 0.05
     var num_steps = 10

@@ -68,6 +68,7 @@ struct SpatialHashGrid3D:
         """
         Finds all particles within Euclidean distance radius from center.
         Inspects the 27-cell stencil (or larger if radius > cell_size).
+        Guarantees no duplicate neighbor IDs despite potential hash collisions.
         """
         var result = List[Int]()
         var r2 = radius * radius
@@ -81,11 +82,17 @@ struct SpatialHashGrid3D:
             for dy in range(-span, span + 1):
                 for dz in range(-span, span + 1):
                     var h = self.hash_coord(cx + dx, cy + dy, cz + dz)
-                    var bucket = self.buckets[h]
-                    for k in range(len(bucket)):
-                        var p_idx = bucket[k]
+                    for k in range(len(self.buckets[h])):
+                        var p_idx = self.buckets[h][k]
                         var dist2 = center.distance_squared_to(particles[p_idx].pos)
                         if dist2 <= r2:
-                            result.append(p_idx)
+                            # Verify not already in result list
+                            var already_found = False
+                            for res_i in range(len(result)):
+                                if result[res_i] == p_idx:
+                                    already_found = True
+                                    break
+                            if not already_found:
+                                result.append(p_idx)
 
         return result^

@@ -1,7 +1,7 @@
 from std.math import sqrt
 
 @fieldwise_init
-struct Vec3:
+struct Vec3(ImplicitlyCopyable):
     """3D Vector with standard vector arithmetic, cross product, and metrics."""
     var x: Float64
     var y: Float64

@@ -2,7 +2,7 @@ from src.math.vec2 import Vec2
 from src.math.vec3 import Vec3
 
 @fieldwise_init
-struct AABB2D:
+struct AABB2D(ImplicitlyCopyable):
     """2D Axis-Aligned Bounding Box."""
     var min_pt: Vec2
     var max_pt: Vec2
@@ -56,7 +56,7 @@ struct AABB2D:
 
 
 @fieldwise_init
-struct AABB3D:
+struct AABB3D(ImplicitlyCopyable):
     """3D Axis-Aligned Bounding Box."""
     var min_pt: Vec3
     var max_pt: Vec3

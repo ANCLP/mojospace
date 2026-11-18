@@ -19,13 +19,13 @@ def main():
     var grid2d = SpatialHashGrid2D(cell_size=1.0, table_size=1009)
     var p2d = List[Particle2D]()
     # Origin particle
-    p2d.append(Particle2D(id=0, pos=Vec2(0.0, 0.0)))
+    p2d.append(Particle2D(0, Vec2(0.0, 0.0)))
     # Close neighbor within radius 0.8
-    p2d.append(Particle2D(id=1, pos=Vec2(0.5, 0.5))) # dist ~ 0.707
+    p2d.append(Particle2D(1, Vec2(0.5, 0.5))) # dist ~ 0.707
     # Boundary neighbor at radius ~ 1.2
-    p2d.append(Particle2D(id=2, pos=Vec2(0.8, 0.9))) # dist ~ 1.204
+    p2d.append(Particle2D(2, Vec2(0.8, 0.9))) # dist ~ 1.204
     # Distant particle
-    p2d.append(Particle2D(id=3, pos=Vec2(10.0, 10.0)))
+    p2d.append(Particle2D(3, Vec2(10.0, 10.0)))
 
     grid2d.build(p2d)
 
@@ -40,10 +40,10 @@ def main():
     # 2. Test 3D Spatial Hash Grid
     var grid3d = SpatialHashGrid3D(cell_size=2.0, table_size=5003)
     var p3d = List[Particle3D]()
-    p3d.append(Particle3D(id=0, pos=Vec3(-1.0, -1.0, -1.0)))
-    p3d.append(Particle3D(id=1, pos=Vec3(-0.5, -0.5, -0.5)))
-    p3d.append(Particle3D(id=2, pos=Vec3(1.0, 1.0, 1.0)))
-    p3d.append(Particle3D(id=3, pos=Vec3(100.0, 100.0, 100.0)))
+    p3d.append(Particle3D(0, Vec3(-1.0, -1.0, -1.0)))
+    p3d.append(Particle3D(1, Vec3(-0.5, -0.5, -0.5)))
+    p3d.append(Particle3D(2, Vec3(1.0, 1.0, 1.0)))
+    p3d.append(Particle3D(3, Vec3(100.0, 100.0, 100.0)))
 
     grid3d.build(p3d)
 

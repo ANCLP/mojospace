@@ -1,7 +1,7 @@
 from src.math.vec2 import Vec2
 
 @fieldwise_init
-struct Particle2D:
+struct Particle2D(ImplicitlyCopyable):
     """2D Particle data container."""
     var id: Int
     var pos: Vec2

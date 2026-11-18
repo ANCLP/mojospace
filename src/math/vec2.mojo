@@ -1,7 +1,7 @@
 from std.math import sqrt
 
 @fieldwise_init
-struct Vec2:
+struct Vec2(ImplicitlyCopyable):
     """2D Vector with standard vector arithmetic and Euclidean metrics."""
     var x: Float64
     var y: Float64

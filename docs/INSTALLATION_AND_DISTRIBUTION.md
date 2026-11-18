@@ -1,6 +1,6 @@
 # Installation & Distribution Guide
 
-This document describes how to use and consume `mojospace` in your own projects without manually cloning the repository.
+This document describes how to use and consume `mojospace` in your own projects without manually cloning the repository, as well as instructions for publishing the package to [prefix.dev](https://prefix.dev).
 
 ---
 
@@ -70,10 +70,46 @@ The output binary is written to `build/mojospace.mojoc`.
 
 ---
 
-## 4. Future: Central Index Installation (`prefix.dev/modular-community`)
+## 4. Publishing to `prefix.dev` Channel
 
-When `mojospace` is published to Prefix.dev, installation will be a single CLI command:
+`mojospace` is configured as a conda package using `pixi-build-mojo`.
 
+### Initial Setup on prefix.dev:
+1. Create an account at [prefix.dev](https://prefix.dev).
+2. Create or verify your channel/namespace: `anclp`.
+3. Authenticate Pixi with your prefix.dev token:
+   ```bash
+   pixi auth login https://prefix.dev
+   ```
+   *(Or export the environment variable `PREFIX_DEV_TOKEN=<your-token>`)*
+
+### Publishing:
+Run the publish task:
 ```bash
-pixi add --channel https://prefix.dev/modular-community mojospace
+pixi publish --to https://prefix.dev/anclp/mojospace
+```
+*(Or alias via `pixi run publish`)*
+
+### Testing Before Publishing:
+To simulate the build and verify packaging without uploading:
+```bash
+pixi publish --dry-run --to https://prefix.dev/anclp/mojospace
+```
+
+### How Users Install from Your Channel:
+Once published to prefix.dev, any user can install `mojospace` into their Pixi project:
+```bash
+pixi add --channel https://prefix.dev/anclp mojospace
+```
+Or by adding `"https://prefix.dev/anclp"` to their `channels` list in `pixi.toml`:
+```toml
+[workspace]
+channels = [
+    "https://prefix.dev/anclp",
+    "https://conda.modular.com/max",
+    "conda-forge"
+]
+
+[dependencies]
+mojospace = "*"
 ```

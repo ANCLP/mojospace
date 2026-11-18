@@ -1,20 +1,21 @@
-[project]
+[workspace]
 name = "mojospace"
 version = "0.1.0"
 description = "Lightweight 2D/3D spatial hashing and Barnes-Hut tree library for particle physics in pure Mojo"
 authors = ["mojospace contributors"]
 channels = [
+    "https://conda.modular.com/max",
     "https://conda.modular.com/max-nightly",
     "https://repo.prefix.dev/modular-community",
     "conda-forge"
 ]
-platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
+platforms = ["linux-64", "osx-arm64"]
 
 [dependencies]
-max = ">=24.5.0"
+mojo = "*"
 
 [tasks]
-test = "mojo run tests/test_math.mojo && mojo run tests/test_spatial_hash.mojo && mojo run tests/test_barnes_hut.mojo && mojo run tests/test_physics.mojo"
-bench = "mojo run benchmarks/bench_neighbor_search.mojo"
-demo-nbody = "mojo run examples/nbody_galaxy.mojo"
-demo-sph = "mojo run examples/sph_neighbors.mojo"
+test = "mojo run -I . tests/test_math.mojo && mojo run -I . tests/test_spatial_hash.mojo && mojo run -I . tests/test_barnes_hut.mojo && mojo run -I . tests/test_physics.mojo"
+bench = "mojo run -I . benchmarks/bench_neighbor_search.mojo"
+demo-nbody = "mojo run -I . examples/nbody_galaxy.mojo"
+demo-sph = "mojo run -I . examples/sph_neighbors.mojo"

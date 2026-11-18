@@ -54,7 +54,7 @@ from src.particle.particle3d import Particle3D
 from src.spatial_hash.hash_grid_3d import SpatialHashGrid3D
 from collections import List
 
-fn main():
+def main():
     # 1. Initialize grid with cell size matching cutoff radius
     var grid = SpatialHashGrid3D(cell_size=1.0, table_size=10007)
 
@@ -83,7 +83,7 @@ from src.particle.particle3d import Particle3D
 from src.trees.octree import BarnesHutOctree
 from collections import List
 
-fn main():
+def main():
     var bounds = AABB3D(Vec3(-100.0, -100.0, -100.0), Vec3(100.0, 100.0, 100.0))
     var octree = BarnesHutOctree(bounds=bounds, max_depth=10)
 

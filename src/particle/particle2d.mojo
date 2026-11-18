@@ -1,6 +1,6 @@
 from src.math.vec2 import Vec2
 
-@value
+@fieldwise_init
 struct Particle2D:
     """2D Particle data container."""
     var id: Int
@@ -11,20 +11,20 @@ struct Particle2D:
     var radius: Float64
     var charge: Float64
 
-    fn __init__(
-        out self,
-        id: Int = 0,
-        pos: Vec2 = Vec2(0.0, 0.0),
-        vel: Vec2 = Vec2(0.0, 0.0),
-        acc: Vec2 = Vec2(0.0, 0.0),
-        mass: Float64 = 1.0,
-        radius: Float64 = 0.1,
-        charge: Float64 = 0.0
-    ):
+    def __init__(out self, id: Int, pos: Vec2):
         self.id = id
         self.pos = pos
-        self.vel = vel
-        self.acc = acc
+        self.vel = Vec2()
+        self.acc = Vec2()
+        self.mass = 1.0
+        self.radius = 0.1
+        self.charge = 0.0
+
+    def __init__(out self, id: Int, pos: Vec2, mass: Float64):
+        self.id = id
+        self.pos = pos
+        self.vel = Vec2()
+        self.acc = Vec2()
         self.mass = mass
-        self.radius = radius
-        self.charge = charge
+        self.radius = 0.1
+        self.charge = 0.0

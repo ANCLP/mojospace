@@ -1,37 +1,40 @@
-from collections import List
+from std.collections import List
 from src.math.vec3 import Vec3
 from src.particle.particle3d import Particle3D
 from src.spatial_hash.hash_grid_3d import SpatialHashGrid3D
 
-fn generate_random_like_particles(count: Int, domain_size: Float64) -> List[Particle3D]:
+def generate_random_like_particles(count: Int, domain_size: Float64) -> List[Particle3D]:
     """Generates pseudo-random particle distribution across 3D domain."""
     var particles = List[Particle3D]()
     # Deterministic linear congruential generator for reproducibility
     var state: Int = 123456789
     for i in range(count):
         state = (state * 1103515245 + 12345) & 0x7FFFFFFF
-        let rx = (Float64(state % 10000) / 10000.0) * domain_size
+        var rx = (Float64(state % 10000) / 10000.0) * domain_size
         state = (state * 1103515245 + 12345) & 0x7FFFFFFF
-        let ry = (Float64(state % 10000) / 10000.0) * domain_size
+        var ry = (Float64(state % 10000) / 10000.0) * domain_size
         state = (state * 1103515245 + 12345) & 0x7FFFFFFF
-        let rz = (Float64(state % 10000) / 10000.0) * domain_size
+        var rz = (Float64(state % 10000) / 10000.0) * domain_size
 
-        particles.append(Particle3D(id=i, pos=Vec3(rx, ry, rz), mass=1.0))
-    return particles
+        particles.append(Particle3D(i, Vec3(rx, ry, rz), 1.0))
+    return particles^
 
-fn main():
+def main():
     print("=== mojospace: Neighbor Search Scaling Benchmark ===")
 
-    let domain: Float64 = 50.0
-    let radius: Float64 = 3.0
-    let counts = List[Int](100, 300, 1000)
+    var domain: Float64 = 50.0
+    var radius: Float64 = 3.0
+    var counts = List[Int]()
+    counts.append(100)
+    counts.append(300)
+    counts.append(1000)
 
     for c_idx in range(len(counts)):
-        let n = counts[c_idx]
-        let particles = generate_random_like_particles(n, domain)
+        var n = counts[c_idx]
+        var particles = generate_random_like_particles(n, domain)
 
         # 1. Naive All-Pairs Count
-        let r2 = radius * radius
+        var r2 = radius * radius
         var naive_distance_evals = 0
         var naive_found_pairs = 0
         for i in range(n):
@@ -46,9 +49,9 @@ fn main():
 
         var hash_found_pairs = 0
         for i in range(n):
-            let neighbors = grid.query_radius(particles[i].pos, radius, particles)
+            var neighbors = grid.query_radius(particles[i].pos, radius, particles)
             for k in range(len(neighbors)):
-                let j = neighbors[k]
+                var j = neighbors[k]
                 if j > i:
                     hash_found_pairs += 1
 

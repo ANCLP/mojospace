@@ -8,17 +8,17 @@ from src.trees.quadtree import Quadtree
 from src.trees.octree import BarnesHutOctree
 from src.physics.force import gravitational_force_direct_2d, gravitational_force_direct_3d
 
-fn assert_true(condition: Bool, msg: String):
+def assert_true(condition: Bool, msg: String):
     if not condition:
         print("[FAIL] " + msg)
     else:
         print("[PASS] " + msg)
 
-fn main():
+def main():
     print("=== Testing Barnes-Hut Trees ===")
 
     # 1. Test 2D Quadtree Barnes-Hut
-    let bounds_2d = AABB2D(Vec2(-50.0, -50.0), Vec2(50.0, 50.0))
+    var bounds_2d = AABB2D(Vec2(-50.0, -50.0), Vec2(50.0, 50.0))
     var quadtree = Quadtree(bounds=bounds_2d, max_depth=8)
     var p2d = List[Particle2D]()
 
@@ -36,13 +36,13 @@ fn main():
         exact_force_2d = exact_force_2d + gravitational_force_direct_2d(p2d[0], p2d[j], G=1.0, softening=0.01)
 
     # Compute Barnes-Hut force on particle 0 with theta = 0.5
-    let bh_force_2d = quadtree.compute_force_barnes_hut(0, p2d, theta=0.5, G=1.0, softening=0.01)
+    var bh_force_2d = quadtree.compute_force_barnes_hut(0, p2d, theta=0.5, G=1.0, softening=0.01)
 
-    let rel_err_2d = (bh_force_2d - exact_force_2d).length() / exact_force_2d.length()
+    var rel_err_2d = (bh_force_2d - exact_force_2d).length() / exact_force_2d.length()
     assert_true(rel_err_2d < 0.05, "2D Quadtree Barnes-Hut force relative error < 5%")
 
     # 2. Test 3D Octree Barnes-Hut
-    let bounds_3d = AABB3D(Vec3(-100.0, -100.0, -100.0), Vec3(100.0, 100.0, 100.0))
+    var bounds_3d = AABB3D(Vec3(-100.0, -100.0, -100.0), Vec3(100.0, 100.0, 100.0))
     var octree = BarnesHutOctree(bounds=bounds_3d, max_depth=10)
     var p3d = List[Particle3D]()
 
@@ -60,13 +60,13 @@ fn main():
     for j in range(1, len(p3d)):
         exact_force_3d = exact_force_3d + gravitational_force_direct_3d(p3d[0], p3d[j], G=1.0, softening=0.01)
 
-    let bh_force_3d = octree.compute_force_barnes_hut(0, p3d, theta=0.5, G=1.0, softening=0.01)
+    var bh_force_3d = octree.compute_force_barnes_hut(0, p3d, theta=0.5, G=1.0, softening=0.01)
 
-    let rel_err_3d = (bh_force_3d - exact_force_3d).length() / exact_force_3d.length()
+    var rel_err_3d = (bh_force_3d - exact_force_3d).length() / exact_force_3d.length()
     assert_true(rel_err_3d < 0.02, "3D Octree Barnes-Hut force relative error < 2%")
 
     # 3. Test Octree Radius Query
-    let query_neighbors = octree.query_radius(Vec3(30.0, 30.0, 30.0), 2.0, p3d)
+    var query_neighbors = octree.query_radius(Vec3(30.0, 30.0, 30.0), 2.0, p3d)
     assert_true(len(query_neighbors) == 4, "3D Octree radius query found all 4 cluster particles")
 
     print("=== All Barnes-Hut Tests Completed ===")

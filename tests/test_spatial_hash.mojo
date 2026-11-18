@@ -1,4 +1,4 @@
-from collections import List
+from std.collections import List
 from src.math.vec2 import Vec2
 from src.math.vec3 import Vec3
 from src.particle.particle2d import Particle2D
@@ -6,13 +6,13 @@ from src.particle.particle3d import Particle3D
 from src.spatial_hash.hash_grid_2d import SpatialHashGrid2D
 from src.spatial_hash.hash_grid_3d import SpatialHashGrid3D
 
-fn assert_true(condition: Bool, msg: String):
+def assert_true(condition: Bool, msg: String):
     if not condition:
         print("[FAIL] " + msg)
     else:
         print("[PASS] " + msg)
 
-fn main():
+def main():
     print("=== Testing Spatial Hash Grids ===")
 
     # 1. Test 2D Spatial Hash Grid
@@ -29,11 +29,11 @@ fn main():
 
     grid2d.build(p2d)
 
-    let neighbors_0_8 = grid2d.query_radius(Vec2(0.0, 0.0), 0.8, p2d)
+    var neighbors_0_8 = grid2d.query_radius(Vec2(0.0, 0.0), 0.8, p2d)
     # Expect particles 0 and 1
     assert_true(len(neighbors_0_8) == 2, "2D query radius 0.8 found exactly 2 particles (self and id=1)")
 
-    let neighbors_1_5 = grid2d.query_radius(Vec2(0.0, 0.0), 1.5, p2d)
+    var neighbors_1_5 = grid2d.query_radius(Vec2(0.0, 0.0), 1.5, p2d)
     # Expect particles 0, 1, 2
     assert_true(len(neighbors_1_5) == 3, "2D query radius 1.5 found exactly 3 particles")
 
@@ -47,11 +47,11 @@ fn main():
 
     grid3d.build(p3d)
 
-    let neighbors_3d = grid3d.query_radius(Vec3(-1.0, -1.0, -1.0), 1.0, p3d)
+    var neighbors_3d = grid3d.query_radius(Vec3(-1.0, -1.0, -1.0), 1.0, p3d)
     # Expect particle 0 (dist 0) and particle 1 (dist ~ 0.866)
     assert_true(len(neighbors_3d) == 2, "3D query radius 1.0 found 2 negative-coordinate particles")
 
-    let empty_neighbors = grid3d.query_radius(Vec3(50.0, 50.0, 50.0), 1.0, p3d)
+    var empty_neighbors = grid3d.query_radius(Vec3(50.0, 50.0, 50.0), 1.0, p3d)
     assert_true(len(empty_neighbors) == 0, "3D query in empty region returned 0 particles")
 
     print("=== All Spatial Hash Tests Completed ===")

@@ -74,24 +74,21 @@ The output binary is written to `build/mojospace.mojoc`.
 
 `mojospace` is configured as a conda package using `pixi-build-mojo`.
 
-### Initial Setup on prefix.dev:
-1. Create an account at [prefix.dev](https://prefix.dev).
-2. Create or verify your channel/namespace: `anclp`.
-3. Authenticate Pixi with your prefix.dev token:
-   ```bash
-   pixi auth login https://prefix.dev
-   ```
-   *(Or export the environment variable `PREFIX_DEV_TOKEN=<your-token>`)*
+### Automated Release via GitHub Actions (Secretless OIDC Workload Identity)
+By linking your GitHub repository to your prefix.dev channel with Write access, releases publish automatically and securely without managing any static API tokens:
 
-### Publishing:
-Run the publish task:
-```bash
-pixi publish --to https://prefix.dev/anclp/mojospace
-```
-*(Or alias via `pixi run publish`)*
+1. **Link Repository on prefix.dev**:
+   - In your prefix.dev channel settings, connect the GitHub repository `anclp/mojospace` with **Write** permission.
+2. **Automated Trigger**:
+   - Creating a GitHub release or pushing a tag (`git tag v0.1.0 && git push origin v0.1.0`) triggers `.github/workflows/release.yml`.
+   - The workflow uses `prefix-dev/setup-pixi` with `auth-workload-identity: true` to exchange a short-lived GitHub OIDC token with prefix.dev.
+   - It precompiles `mojospace.mojoc`, generates Sigstore cryptographic attestations, and publishes `mojospace-*.conda` to `https://prefix.dev/anclp/mojospace`.
 
-### Testing Before Publishing:
-To simulate the build and verify packaging without uploading:
+### Manual / Local Builds
+> [!NOTE]
+> If building packages locally on a Windows/WSL path containing spaces (e.g. `Startup Projects`), upstream `pixi-build-mojo` has an unquoted variable in its output path template. For local builds, run `pixi run package` (which outputs `build/mojospace.mojoc` directly), or test conda publishing inside a directory without spaces (e.g. `/tmp/mojospace`). GitHub Actions CI/CD runs in `/home/runner/work/...` which contains no spaces and is unaffected.
+
+To test publishing locally:
 ```bash
 pixi publish --dry-run --to https://prefix.dev/anclp/mojospace
 ```

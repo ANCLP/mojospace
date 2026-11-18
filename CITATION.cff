@@ -5,7 +5,7 @@ authors:
 title: "mojospace: Lightweight 2D/3D Spatial Hashing and Barnes-Hut Trees in Pure Mojo"
 version: 0.1.0
 date-released: 2026-11-18
-url: "https://github.com/anclp/mojospace"
+url: "https://github.com/ANCLP/mojospace"
 keywords:
   - "spatial hashing"
   - "barnes-hut"

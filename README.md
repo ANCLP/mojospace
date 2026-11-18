@@ -17,7 +17,7 @@ Designed for particle physics engines, Smoothed Particle Hydrodynamics (SPH), Di
 - **🔍 Spatial Hashing (2D & 3D)**: Constant-time $\mathcal{O}(1)$ expected radius neighbor lookup using the [Teschner et al. (2003)](#references) XOR-prime hash formulation with duplicate collision prevention.
 - **🌳 Barnes-Hut Trees (Quadtree & Octree)**: Hierarchical $\mathcal{O}(N \log N)$ n-body force calculation with Multipole Acceptance Criteria ($\theta$) and Plummer softening.
 - **🌊 SPH & Physics Kernels**: Monaghan cubic spline smoothing kernels, Müller spiky pressure gradients, Lennard-Jones (12-6) molecular potentials, and symplectic time integrators (Velocity Verlet & Symplectic Euler).
-- **📦 Precompiled Binary Distribution**: Automatically compiled and attached to every GitHub Release as `mojospace.mojoc` (~125 KB) for instant zero-clone use.
+- **📦 Multi-Channel Distribution**: Precompiled binary releases (`mojospace.mojoc`), direct Pixi git dependencies, and prefix.dev channel packaging (`pixi publish`).
 - **📚 Rigorous Mathematical Documentation**: Complete mathematical formulas, derivations, complexity analysis, and academic citations in [`docs/`](docs/).
 
 ---
@@ -40,7 +40,12 @@ Every tagged release builds and attaches `mojospace.mojoc`:
 2. Place it in your project folder.
 3. Import directly with `import mojospace`.
 
-For detailed setup instructions, see [docs/INSTALLATION_AND_DISTRIBUTION.md](docs/INSTALLATION_AND_DISTRIBUTION.md).
+### Option 3: Install from prefix.dev Channel
+```bash
+pixi add --channel https://prefix.dev/anclp mojospace
+```
+
+For detailed instructions, see [docs/INSTALLATION_AND_DISTRIBUTION.md](docs/INSTALLATION_AND_DISTRIBUTION.md).
 
 ---
 
@@ -134,6 +139,9 @@ pixi run demo-sph
 
 # Precompile binary package (.mojoc)
 pixi run package
+
+# Publish to prefix.dev channel
+pixi publish --to https://prefix.dev/anclp/mojospace
 ```
 
 *(On Windows, run commands through WSL2).*

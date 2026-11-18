@@ -1,6 +1,6 @@
 # Installation & Distribution Guide
 
-This document describes how to use and consume `mojospace` in your own projects without manually cloning the repository.
+This document describes how to use and consume `mojospace` in your own projects without manually cloning the repository, as well as instructions for publishing the package to [prefix.dev](https://prefix.dev).
 
 ---
 
@@ -70,10 +70,43 @@ The output binary is written to `build/mojospace.mojoc`.
 
 ---
 
-## 4. Future: Central Index Installation (`prefix.dev/modular-community`)
+## 4. Publishing to `prefix.dev` Channel
 
-When `mojospace` is published to Prefix.dev, installation will be a single CLI command:
+`mojospace` is configured as a conda package using `pixi-build-mojo`.
 
+### Automated Release via GitHub Actions (Secretless OIDC Workload Identity)
+By linking your GitHub repository to your prefix.dev channel with Write access, releases publish automatically and securely without managing any static API tokens:
+
+1. **Link Repository on prefix.dev**:
+   - In your prefix.dev channel settings, connect the GitHub repository `anclp/mojospace` with **Write** permission.
+2. **Automated Trigger**:
+   - Creating a GitHub release or pushing a tag (`git tag v0.1.0 && git push origin v0.1.0`) triggers `.github/workflows/release.yml`.
+   - The workflow uses `prefix-dev/setup-pixi` with `auth-workload-identity: true` to exchange a short-lived GitHub OIDC token with prefix.dev.
+   - It precompiles `mojospace.mojoc`, generates Sigstore cryptographic attestations, and publishes `mojospace-*.conda` to `https://prefix.dev/anclp/mojospace`.
+
+### Manual / Local Builds
+> [!NOTE]
+> If building packages locally on a Windows/WSL path containing spaces (e.g. `Startup Projects`), upstream `pixi-build-mojo` has an unquoted variable in its output path template. For local builds, run `pixi run package` (which outputs `build/mojospace.mojoc` directly), or test conda publishing inside a directory without spaces (e.g. `/tmp/mojospace`). GitHub Actions CI/CD runs in `/home/runner/work/...` which contains no spaces and is unaffected.
+
+To test publishing locally:
 ```bash
-pixi add --channel https://prefix.dev/modular-community mojospace
+pixi publish --dry-run --to https://prefix.dev/anclp/mojospace
+```
+
+### How Users Install from Your Channel:
+Once published to prefix.dev, any user can install `mojospace` into their Pixi project:
+```bash
+pixi add --channel https://prefix.dev/anclp mojospace
+```
+Or by adding `"https://prefix.dev/anclp"` to their `channels` list in `pixi.toml`:
+```toml
+[workspace]
+channels = [
+    "https://prefix.dev/anclp",
+    "https://conda.modular.com/max",
+    "conda-forge"
+]
+
+[dependencies]
+mojospace = "*"
 ```

@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use mojospace in your research or simulation project, please cite it as below."
+authors:
+  - name: "mojospace Contributors"
+title: "mojospace: Lightweight 2D/3D Spatial Hashing and Barnes-Hut Trees in Pure Mojo"
+version: 0.1.0
+date-released: 2026-11-18
+url: "https://github.com/anclp/mojospace"
+keywords:
+  - "spatial hashing"
+  - "barnes-hut"
+  - "octree"
+  - "quadtree"
+  - "particle physics"
+  - "n-body simulation"
+  - "sph"
+  - "mojo"
+license: MIT

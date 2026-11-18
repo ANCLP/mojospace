@@ -1,0 +1,32 @@
+# Mojo & Modular
+.magic/
+.modular/
+build/
+*.mojopkg
+*.o
+*.so
+*.dylib
+*.dll
+*.exe
+
+# Pixi / Conda
+.pixi/
+pixi.lock
+
+# Python / CPython artifacts if any
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# IDE & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -9,11 +9,7 @@ def integrate_symplectic_euler_step_2d(
     dt: Float64,
     forces: List[Vec2]
 ):
-    """
-    First-order Symplectic Euler step:
-    v(t + dt) = v(t) + (F / m) * dt
-    x(t + dt) = x(t) + v(t + dt) * dt
-    """
+    """Executes a 2D first-order Symplectic Euler numerical integration step."""
     for i in range(len(particles)):
         var inv_m = 1.0 / particles[i].mass
         var a = forces[i] * inv_m
@@ -26,7 +22,7 @@ def integrate_symplectic_euler_step_3d(
     dt: Float64,
     forces: List[Vec3]
 ):
-    """3D First-order Symplectic Euler step."""
+    """Executes a 3D first-order Symplectic Euler numerical integration step."""
     for i in range(len(particles)):
         var inv_m = 1.0 / particles[i].mass
         var a = forces[i] * inv_m
@@ -39,11 +35,7 @@ def integrate_velocity_verlet_step_3d(
     dt: Float64,
     forces: List[Vec3]
 ):
-    """
-    Velocity Verlet numerical integration step (3D):
-    x(t + dt) = x(t) + v(t) * dt + 0.5 * a(t) * dt^2
-    v(t + dt) = v(t) + 0.5 * (a(t) + a(t + dt)) * dt
-    """
+    """Executes a 3D second-order Velocity Verlet numerical integration step."""
     var half_dt = 0.5 * dt
     for i in range(len(particles)):
         var inv_m = 1.0 / particles[i].mass
@@ -59,7 +51,7 @@ def integrate_velocity_verlet_step_2d(
     dt: Float64,
     forces: List[Vec2]
 ):
-    """Velocity Verlet numerical integration step (2D)."""
+    """Executes a 2D second-order Velocity Verlet numerical integration step."""
     var half_dt = 0.5 * dt
     for i in range(len(particles)):
         var inv_m = 1.0 / particles[i].mass

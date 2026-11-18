@@ -19,3 +19,4 @@ test = "mojo run -I . tests/test_math.mojo && mojo run -I . tests/test_spatial_h
 bench = "mojo run -I . benchmarks/bench_neighbor_search.mojo"
 demo-nbody = "mojo run -I . examples/nbody_galaxy.mojo"
 demo-sph = "mojo run -I . examples/sph_neighbors.mojo"
+package = "mkdir -p build && mojo precompile src -o build/mojospace.mojoc"

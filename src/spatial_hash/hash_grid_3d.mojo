@@ -4,8 +4,8 @@ from src.math.vec3 import Vec3
 from src.particle.particle3d import Particle3D
 
 struct SpatialHashGrid3D:
-    """
-    3D Spatial Hash Grid based on Teschner et al. (2003).
+    """3D Spatial Hash Grid based on Teschner et al. (2003).
+
     Provides O(1) expected neighbor search within interaction radius.
     """
     var cell_size: Float64
@@ -22,10 +22,7 @@ struct SpatialHashGrid3D:
             self.buckets.append(List[Int]())
 
     def hash_coord(self, cx: Int, cy: Int, cz: Int) -> Int:
-        """
-        Teschner et al. (2003) 3D prime hash:
-        Hash(cx, cy, cz) = ((cx * p1) ^ (cy * p2) ^ (cz * p3)) mod N
-        """
+        """Computes the Teschner et al. (2003) 3D XOR-prime hash."""
         var p1 = 73856093
         var p2 = 19349663
         var p3 = 83492791
@@ -65,11 +62,7 @@ struct SpatialHashGrid3D:
         radius: Float64,
         particles: List[Particle3D]
     ) -> List[Int]:
-        """
-        Finds all particles within Euclidean distance radius from center.
-        Inspects the 27-cell stencil (or larger if radius > cell_size).
-        Guarantees no duplicate neighbor IDs despite potential hash collisions.
-        """
+        """Finds all particles within Euclidean distance radius from center."""
         var result = List[Int]()
         var r2 = radius * radius
         var span = Int(floor(radius * self.inv_cell_size)) + 1
@@ -86,7 +79,6 @@ struct SpatialHashGrid3D:
                         var p_idx = self.buckets[h][k]
                         var dist2 = center.distance_squared_to(particles[p_idx].pos)
                         if dist2 <= r2:
-                            # Verify not already in result list
                             var already_found = False
                             for res_i in range(len(result)):
                                 if result[res_i] == p_idx:

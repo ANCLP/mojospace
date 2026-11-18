@@ -1,0 +1,42 @@
+name: Release Binary Packages
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    name: Build & Release mojospace.mojoc
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Pixi
+        uses: prefix-dev/setup-pixi@v0.8
+        with:
+          pixi-version: latest
+          cache: true
+
+      - name: Install Environment
+        run: pixi install
+
+      - name: Run Test Suite
+        run: pixi run test
+
+      - name: Precompile mojospace Package (.mojoc)
+        run: pixi run package
+
+      - name: Upload Binary to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/mojospace.mojoc
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

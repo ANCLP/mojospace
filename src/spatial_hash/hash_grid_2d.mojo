@@ -4,8 +4,8 @@ from src.math.vec2 import Vec2
 from src.particle.particle2d import Particle2D
 
 struct SpatialHashGrid2D:
-    """
-    2D Spatial Hash Grid based on Teschner et al. (2003).
+    """2D Spatial Hash Grid based on Teschner et al. (2003).
+
     Provides O(1) expected neighbor search within interaction radius.
     """
     var cell_size: Float64
@@ -22,10 +22,7 @@ struct SpatialHashGrid2D:
             self.buckets.append(List[Int]())
 
     def hash_coord(self, cx: Int, cy: Int) -> Int:
-        """
-        Teschner et al. (2003) 2D prime hash:
-        Hash(cx, cy) = ((cx * p1) ^ (cy * p2)) mod N
-        """
+        """Computes the Teschner et al. (2003) 2D XOR-prime hash."""
         var p1 = 73856093
         var p2 = 19349663
         var h = (cx * p1) ^ (cy * p2)
@@ -63,10 +60,7 @@ struct SpatialHashGrid2D:
         radius: Float64,
         particles: List[Particle2D]
     ) -> List[Int]:
-        """
-        Finds all particles within Euclidean distance radius from center.
-        Inspects the 9-cell stencil (or larger if radius > cell_size).
-        """
+        """Finds all particles within Euclidean distance radius from center."""
         var result = List[Int]()
         var r2 = radius * radius
         var span = Int(floor(radius * self.inv_cell_size)) + 1

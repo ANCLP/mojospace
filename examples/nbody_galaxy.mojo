@@ -62,7 +62,7 @@ def main():
         print("Body", particles[i].id, "pos: (", particles[i].pos.x, ",", particles[i].pos.y, ",", particles[i].pos.z, ")")
 
     print("\nAdvancing simulation steps...")
-    for step in range(num_steps):
+    for _ in range(num_steps):
         # 1. Build Barnes-Hut Octree for current particle configurations
         octree.build(particles)
 

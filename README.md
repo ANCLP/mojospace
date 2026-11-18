@@ -121,7 +121,7 @@ This project uses [Pixi](https://pixi.sh) to manage the Mojo environment across 
 ### Installation & Running:
 ```bash
 # Clone the repository
-git clone https://github.com/anclp/mojospace.git
+git clone https://github.com/ANCLP/mojospace.git
 cd mojospace
 
 # Run test suite
@@ -147,7 +147,7 @@ If you use `mojospace` in academic research, please cite:
   author = {mojospace Contributors},
   title = {mojospace: Lightweight 2D/3D Spatial Hashing and Barnes-Hut Trees in Pure Mojo},
   year = {2026},
-  url = {https://github.com/anclp/mojospace}
+  url = {https://github.com/ANCLP/mojospace}
 }
 ```
 
